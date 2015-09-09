@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.pega.mapper.NoticeBoardMapper" >
+   
+    <insert id="insertNoticeBoard" parameterType="kr.co.pega.board.notice.NoticeBoard" >
+        INSERT INTO notice_board 
+        (
+        	nb_name,
+        	nb_content,
+        	nb_date,
+        	nb_hit,
+        	user_number,
+        	user_alias
+        )
+        VALUES 
+        ( 
+        	#{boardTitle, jdbcType=VARCHAR}, 
+        	#{boardContent, jdbcType=VARCHAR},
+        	#{boardDate, jdbcType=DATE},
+        	#{hit, jdbcType=INTEGER},
+        	#{userNumber, jdbcType=INTEGER},
+        	#{userAlias, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <select id="getNoticeBoardList" parameterType="Integer" resultType="kr.co.pega.board.notice.NoticeBoard">
+	   		SELECT 
+	   		nb_name AS boardTitle, 
+	   		nb_content AS boardContent,
+	   		nb_date AS boardDate, 
+	   		user_number AS userNumber, 
+	   		nb_number AS boardNumber, 		
+	 		user_alias AS userAlias,
+	 		nb_hit AS hit
+			FROM notice_board
+			ORDER BY nb_number DESC LIMIT #{startNumber}, 10;
+   </select>
+ 
+   
+   <select id="countNoticeBoardList" resultType="Integer">
+	   		SELECT COUNT(user_number)
+			FROM notice_board;
+   </select>
+   
+   <select id="getNoticeBoard" parameterType="Integer" resultType="kr.co.pega.board.notice.NoticeBoard">
+	   		SELECT 
+	   		nb_name AS boardTitle, 
+	   		nb_content AS boardContent,
+	   		nb_date AS boardDate, 
+	   		user_number AS userNumber, 
+	   		nb_number AS boardNumber, 		
+	 		user_alias AS userAlias,
+	 		nb_hit AS hit
+			FROM notice_board
+			WHERE nb_number = #{nb_number};
+   </select>
+   
+   <update id="incrementHit" parameterType="kr.co.pega.board.notice.NoticeBoard">
+   		UPDATE notice_board
+   		SET nb_hit = nb_hit+1
+   		WHERE nb_number = #{boardNumber};
+   </update>
+   
+   <update id="updateNoticeBoard" parameterType="kr.co.pega.board.notice.NoticeBoard">
+   		UPDATE notice_board
+   		SET 
+   		nb_name = #{boardTitle, jdbcType=VARCHAR},
+   		nb_content = #{boardContent, jdbcType=VARCHAR},
+   		nb_date = #{boardDate, jdbcType=DATE}
+   		WHERE nb_number = #{boardNumber};
+   </update>
+  
+  	<delete id="deleteNoticeBoard" parameterType="Integer">
+   		DELETE 
+   		FROM notice_board
+   		WHERE nb_number = #{boardNumber};
+   </delete>
+  
+    <insert id="registComment" parameterType="kr.co.pega.board.notice.NoticeComment" >
+        INSERT INTO notice_comment 
+        (
+        	nc_number,
+        	nc_date,
+        	nc_content,
+        	nb_number,
+        	user_number,
+        	user_alias
+        )
+        VALUES 
+        ( 
+        	#{nc_number, }, 
+        	#{nc_date, jdbcType=DATE},
+        	#{nc_content, jdbcType=VARCHAR},
+        	#{nb_number, jdbcType=INTEGER},
+        	#{user_number, jdbcType=INTEGER},
+        	#{user_alias, jdbcType=VARCHAR}
+        )
+    </insert>
+  
+  	<select id="getCommentList" parameterType="Integer" resultType="kr.co.pega.board.notice.NoticeComment">
+	   		SELECT *
+			FROM notice_comment
+			WHERE nb_number = #{boardNumber};
+  	</select>
+  	 
+</mapper>

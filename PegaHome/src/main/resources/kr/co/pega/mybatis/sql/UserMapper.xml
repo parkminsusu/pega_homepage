@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kr.co.pega.mapper.UserMapper" >
+  
+   
+    <insert id="insertUser" parameterType="kr.co.pega.user.User" >
+        INSERT INTO user 
+        (
+        	user_id,
+        	user_pw,
+        	user_name,
+        	user_email,
+        	user_phone,
+        	user_alias,
+        	user_grant,
+        	user_th,
+        	user_part
+        )
+        VALUES 
+        ( 
+        	#{userId, jdbcType=VARCHAR}, 
+        	#{userPassword, jdbcType=VARCHAR}, 
+        	#{userName, jdbcType=VARCHAR},
+        	#{userEmail, jdbcType=VARCHAR},
+        	#{userPhone, jdbcType=CHAR},
+        	#{userAlias, jdbcType=VARCHAR},
+        	#{userGrant, jdbcType=VARCHAR},
+        	#{userTh, jdbcType=VARCHAR},
+        	#{userPart, jdbcType=INTEGER}
+        )
+    </insert>
+    
+   <select id="getUser" resultType="kr.co.pega.user.User">
+   		SELECT 
+   		user_number as userNumber, 
+   		user_id as userId , 
+   		user_pw as userPassword,
+   		user_name as userName,
+   		user_email as userEmail,
+   		user_phone as userPhone,
+   		user_alias as userAlias,
+   		user_grant as userGrant,
+   		user_th as userTh,
+   		user_part as userPart
+   		FROM user
+   </select>
+  
+ 
+</mapper>

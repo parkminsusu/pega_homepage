@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+    <!-- default template -->
+    <definition name="defaultTpl" template="/WEB-INF/views/tiles/template/default.layout.jsp">
+    	<put-attribute name="header" value="/WEB-INF/views/tiles/attribute/header.jsp"/>
+    	<put-attribute name="footer" value="/WEB-INF/views/tiles/attribute/footer.jsp"/>
+    </definition>
+    
+    <definition name="defaultTplsub" template="/WEB-INF/views/tiles/template/default.sub.layout.jsp">
+    	<put-attribute name="header_sub" value="/WEB-INF/views/tiles/attribute/header_sub.jsp"/>
+    	<put-attribute name="footer_sub" value="/WEB-INF/views/tiles/attribute/footer_sub.jsp"/>
+    </definition>
+
+    <!-- 왼쪽 메뉴가 있는 템플릿 -->
+    <definition name="contents/*.do" extends="defaultTpl">
+        <put-attribute name="contents"  value="/WEB-INF/views/contents/{1}.jsp" />
+    </definition>
+    
+    <definition name="notice/*.do" extends="defaultTplsub">
+        <put-attribute name="contents"  value="/WEB-INF/views/notice/{1}.jsp" />
+    </definition>
+    
+    <definition name="sign/*.do" extends="defaultTplsub">
+        <put-attribute name="contents"  value="/WEB-INF/views/sign/{1}.jsp" />
+    </definition>
+    
+     <definition name="member/*.do" extends="defaultTplsub">
+        <put-attribute name="contents"  value="/WEB-INF/views/member/{1}.jsp" />
+    </definition>
+  
+</tiles-definitions>
